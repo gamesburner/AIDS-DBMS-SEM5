@@ -1,0 +1,147 @@
+Microsoft Windows [Version 10.0.22000.2538]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\aids>mongosh
+Current Mongosh Log ID: 68c77a9a274cecdc76cebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.0.13
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-09-15T08:01:39.621+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use collegedb
+switched to db collegedb
+collegedb> db.createCollection('students');
+{ ok: 1 }
+collegedb> show collections;
+students
+collegedb> db.students.insertOne({_id:1, name:"Pushkar",dept:"AIDS",marks:85,city:"Nashik"});
+{ acknowledged: true, insertedId: 1 }
+collegedb> db.students.find("Pushkar");
+MongoInvalidArgumentError: Query filter must be a plain object or ObjectId
+collegedb> db.students.find();
+[
+  { _id: 1, name: 'Pushkar', dept: 'AIDS', marks: 85, city: 'Nashik' }
+]
+collegedb> db.students.insertMany[({_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"}),({_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"}),({_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"}),({_id:"Leena",dept:"IT",marks:90,city:"Nashik"})]
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:166)
+
+> 1 | db.students.insertMany[({_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"}),({_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"}),({_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"}),({_id:"Leena",dept:"IT",marks:90,city:"Nashik"})]
+    |                                                                                                                                                                       ^
+  2 |
+
+collegedb> db.students.insertMany[({_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"}),({_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"}),({_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"}),({_id:5,name:"Leena",dept:"IT",marks:90,city:"Nashik"})];
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:166)
+
+> 1 | db.students.insertMany[({_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"}),({_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"}),({_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"}),({_id:5,name:"Leena",dept:"IT",marks:90,city:"Nashik"})];
+    |                                                                                                                                                                       ^
+  2 |
+
+collegedb> db.students.insertMany[({_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"}),({_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"}),({_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"}),({_id:5,name:"Leena",dept:"IT",marks:90,city:"Nashik"})];
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:166)
+
+> 1 | db.students.insertMany[({_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"}),({_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"}),({_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"}),({_id:5,name:"Leena",dept:"IT",marks:90,city:"Nashik"})];
+    |                                                                                                                                                                       ^
+  2 |
+
+collegedb> db.students.insertMany([{_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"},{_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"},{_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"},{_id:5,name:"Leena",dept:"IT",marks:90,city:"Nashik"}]);
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:162)
+
+> 1 | db.students.insertMany([{_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"},{_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"},{_id:4,name:"Prerana",dept"AIDS",marks:79,city:"Nashik"},{_id:5,name:"Leena",dept:"IT",marks:90,city:"Nashik"}]);
+    |                                                                                                                                                                   ^
+  2 |
+
+collegedb> db.students.insertMany([{_id:2,name:'Kalpesh',dept:"AIDS",marks:82,city:"Nashik"},{_id:3,name:"Paras",dept:"AIDS",marks:76,city:"Pune"},{_id:4,name:"Prerana",dept:"AIDS",marks:79,city:"Nashik"},{_id:5,name:"Leena",dept:"IT",marks:90,city:"Nashik"}]);
+{ acknowledged: true, insertedIds: { '0': 2, '1': 3, '2': 4, '3': 5 } }
+collegedb> db.students.find();
+[
+  { _id: 1, name: 'Pushkar', dept: 'AIDS', marks: 85, city: 'Nashik' },
+  { _id: 2, name: 'Kalpesh', dept: 'AIDS', marks: 82, city: 'Nashik' },
+  { _id: 3, name: 'Paras', dept: 'AIDS', marks: 76, city: 'Pune' },
+  { _id: 4, name: 'Prerana', dept: 'AIDS', marks: 79, city: 'Nashik' },
+  { _id: 5, name: 'Leena', dept: 'IT', marks: 90, city: 'Nashik' }
+]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",avgMarks:{$avg:"$marks"}}}]);
+[ { _id: 'AIDS', avgMarks: 80.5 }, { _id: 'IT', avgMarks: 90 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",mins:{$avg:"$marks"}}}]);
+[ { _id: 'AIDS', mins: 80.5 }, { _id: 'IT', mins: 90 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",mins:{$min:"$marks"}}}]);
+[ { _id: 'IT', mins: 90 }, { _id: 'AIDS', mins: 76 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",maxm:{$max:"$marks"}}}]);
+[ { _id: 'IT', maxm: 90 }, { _id: 'AIDS', maxm: 85 } ]
+collegedb> db.students.insertOne({_id:6, name:"Krishna",dept:"IT",marks:85,city:"Pune"});
+{ acknowledged: true, insertedId: 6 }
+collegedb> db.students.find();
+[
+  { _id: 1, name: 'Pushkar', dept: 'AIDS', marks: 85, city: 'Nashik' },
+  { _id: 2, name: 'Kalpesh', dept: 'AIDS', marks: 82, city: 'Nashik' },
+  { _id: 3, name: 'Paras', dept: 'AIDS', marks: 76, city: 'Pune' },
+  { _id: 4, name: 'Prerana', dept: 'AIDS', marks: 79, city: 'Nashik' },
+  { _id: 5, name: 'Leena', dept: 'IT', marks: 90, city: 'Nashik' },
+  { _id: 6, name: 'Krishna', dept: 'IT', marks: 85, city: 'Pune' }
+]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",avgMarks:{$avg:"$marks"}}}]);
+[ { _id: 'IT', avgMarks: 87.5 }, { _id: 'AIDS', avgMarks: 80.5 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",maxm:{$max:"$marks"}}}]);
+[ { _id: 'AIDS', maxm: 85 }, { _id: 'IT', maxm: 90 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",mins:{$min:"$marks"}}}]);
+[ { _id: 'IT', mins: 85 }, { _id: 'AIDS', mins: 76 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",avgMarks:{$avg:"$marks"},maxm:{$max:"$marks"},mins:{$min:"$marks"}}}]);
+[
+  { _id: 'IT', avgMarks: 87.5, maxm: 90, mins: 85 },
+  { _id: 'AIDS', avgMarks: 80.5, maxm: 85, mins: 76 }
+]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",avgMarks:{$avg:"$marks"},maxm:{$max:"$marks"},mins:{$min:"$marks"}},$sort:{avgMarks:-1}}]);
+MongoServerError[Location40323]: A pipeline stage specification object must contain exactly one field.
+collegedb> db.students.aggregate([{$group:{_id:"$dept",avgMarks:{$avg:"$marks"},maxm:{$max:"$marks"},mins:{$min:"$marks"},$sort:{avgMarks:-1}}}]);
+MongoServerError[Location40234]: The field '$sort' must be an accumulator object
+collegedb> db.students.aggregate([{$group:{_id:"$dept",avgMarks:{$avg:"$marks"},maxm:{$max:"$marks"},mins:{$min:"$marks"}}},{$sort:{avgMarks:-1}}]);
+[
+  { _id: 'IT', avgMarks: 87.5, maxm: 90, mins: 85 },
+  { _id: 'AIDS', avgMarks: 80.5, maxm: 85, mins: 76 }
+]
+collegedb> db.students.aggregate([{$group:{_id:"$dept",avgMarks:{$avg:"$marks"},maxm:{$max:"$marks"},mins:{$min:"$marks"}}},{$sort:{avgMarks:1}}]);
+[
+  { _id: 'AIDS', avgMarks: 80.5, maxm: 85, mins: 76 },
+  { _id: 'IT', avgMarks: 87.5, maxm: 90, mins: 85 }
+]
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:"_id"}}}]);
+[ { _id: 'Pune', total: 0 }, { _id: 'Nashik', total: 0 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:"$_id"}}}]);
+[ { _id: 'Nashik', total: 12 }, { _id: 'Pune', total: 9 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:"$city"}}}]);
+[ { _id: 'Nashik', total: 0 }, { _id: 'Pune', total: 0 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:"$"}}}]);
+MongoServerError[Location16872]: '$' by itself is not a valid FieldPath
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:""}}}]);
+[ { _id: 'Nashik', total: 0 }, { _id: 'Pune', total: 0 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:"$total"}}}]);
+[ { _id: 'Nashik', total: 0 }, { _id: 'Pune', total: 0 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$city"}},total:{$sum:"$total"}]);
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:51)
+
+> 1 | db.students.aggregate([{$group:{_id:"$city"}},total:{$sum:"$total"}]);
+    |                                                    ^
+  2 |
+
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum}}}]);
+ReferenceError: $sum is not defined
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:"$city"}}}]);
+[ { _id: 'Nashik', total: 0 }, { _id: 'Pune', total: 0 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:"$sum"}}}]);
+[ { _id: 'Nashik', total: 0 }, { _id: 'Pune', total: 0 } ]
+collegedb> db.students.aggregate([{$group:{_id:"$city",}},{$sum:"$city"}]);
+MongoServerError[Location40324]: Unrecognized pipeline stage name: '$sum'
+collegedb> db.students.aggregate([{$group:{_id:"$city",total:{$sum:1}}}]);
+[ { _id: 'Nashik', total: 4 }, { _id: 'Pune', total: 2 } ]
+collegedb>
