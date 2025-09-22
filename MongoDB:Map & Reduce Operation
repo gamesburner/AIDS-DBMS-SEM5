@@ -1,0 +1,256 @@
+Microsoft Windows [Version 10.0.22000.2538]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\aids>mongosh
+Current Mongosh Log ID: 68d0fd99e5e12b0340cebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.0.13
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-09-22T13:10:45.427+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use schoolDB;
+switched to db schoolDB
+schoolDB> schoolDB.createCollection("students");
+ReferenceError: schoolDB is not defined
+schoolDB> createCollection("students");
+ReferenceError: createCollection is not defined
+schoolDB> db.createCollection("students");
+{ ok: 1 }
+schoolDB> show databases;
+admin      40.00 KiB
+collagedb   8.00 KiB
+collegedb  72.00 KiB
+config     84.00 KiB
+local      80.00 KiB
+pvgcoez    80.00 KiB
+schoolDB    8.00 KiB
+schoolDB> show collections;
+students
+schoolDB> db.students.insertMany([{name:'amit',subject:'math',marks:85},{name:'amit',subject:'science',marks:90},{name:'riya',subject:'}
+Uncaught:
+SyntaxError: Unterminated string constant. (1:124)
+
+> 1 | db.students.insertMany([{name:'amit',subject:'math',marks:85},{name:'amit',subject:'science',marks:90},{name:'riya',subject:'}
+    |                                                                                                                             ^
+  2 |
+
+schoolDB> db.students.insertMany([{name:'amit',subject:'math',marks:85},{name:'amit',subject:'science',marks:90},{name:'riya',subject:'math',marks:78},{name:'riya',subject:'science',marks:88},{name:'john',subject:'math',marks:92},{name:'john',subject:'science',marks:81}]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68d0ffe9e5e12b0340cebea4'),
+    '1': ObjectId('68d0ffe9e5e12b0340cebea5'),
+    '2': ObjectId('68d0ffe9e5e12b0340cebea6'),
+    '3': ObjectId('68d0ffe9e5e12b0340cebea7'),
+    '4': ObjectId('68d0ffe9e5e12b0340cebea8'),
+    '5': ObjectId('68d0ffe9e5e12b0340cebea9')
+  }
+}
+schoolDB> sb.students.find().pretty();
+ReferenceError: sb is not defined
+schoolDB> db.students.find().pretty();
+[
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea4'),
+    name: 'amit',
+    subject: 'math',
+    marks: 85
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea5'),
+    name: 'amit',
+    subject: 'science',
+    marks: 90
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea6'),
+    name: 'riya',
+    subject: 'math',
+    marks: 78
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea7'),
+    name: 'riya',
+    subject: 'science',
+    marks: 88
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea8'),
+    name: 'john',
+    subject: 'math',
+    marks: 92
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea9'),
+    name: 'john',
+    subject: 'science',
+    marks: 81
+  }
+]
+schoolDB> var map Function=function(key,value){emit(this.name,this.marks);};
+Uncaught:
+SyntaxError: Missing semicolon. (1:7)
+
+> 1 | var map Function=function(key,value){emit(this.name,this.marks);};
+    |        ^
+  2 |
+
+schoolDB> var map Function=function(key,value){emit(this.name,this.marks)};
+Uncaught:
+SyntaxError: Missing semicolon. (1:7)
+
+> 1 | var map Function=function(key,value){emit(this.name,this.marks)};
+    |        ^
+  2 |
+
+schoolDB> var mapFunction=function(key,value){emit(this.name,this.marks)};
+
+schoolDB> mapFunction();
+ReferenceError: emit is not defined
+schoolDB> mapFunction;
+[Function: mapFunction]
+schoolDB> db.students.find().pretty();
+[
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea4'),
+    name: 'amit',
+    subject: 'math',
+    marks: 85
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea5'),
+    name: 'amit',
+    subject: 'science',
+    marks: 90
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea6'),
+    name: 'riya',
+    subject: 'math',
+    marks: 78
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea7'),
+    name: 'riya',
+    subject: 'science',
+    marks: 88
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea8'),
+    name: 'john',
+    subject: 'math',
+    marks: 92
+  },
+  {
+    _id: ObjectId('68d0ffe9e5e12b0340cebea9'),
+    name: 'john',
+    subject: 'science',
+    marks: 81
+  }
+]
+schoolDB> var reduceFunction=function(key,value){
+... return Array.avg(values);
+... };
+
+schoolDB> db.students.mapReduce{
+Uncaught:
+SyntaxError: Missing semicolon. (1:21)
+
+> 1 | db.students.mapReduce{
+    |                      ^
+  2 |
+
+schoolDB> db.students.mapReduce{mapFunction;
+Uncaught:
+SyntaxError: Missing semicolon. (1:21)
+
+> 1 | db.students.mapReduce{mapFunction;
+    |                      ^
+  2 |
+
+schoolDB> db.students.mapReduce{mapFunction;reduceFunction;{out:'average_marks'}};
+Uncaught:
+SyntaxError: Missing semicolon. (1:21)
+
+> 1 | db.students.mapReduce{mapFunction;reduceFunction;{out:'average_marks'}};
+    |                      ^
+  2 |
+
+schoolDB> db.students.mapReduce{mapFunction;reduceFunction;{out:'average_marks'};};
+Uncaught:
+SyntaxError: Missing semicolon. (1:21)
+
+> 1 | db.students.mapReduce{mapFunction;reduceFunction;{out:'average_marks'};};
+    |                      ^
+  2 |
+
+schoolDB> db.students.mapReduce{mapFunction,reduceFunction,{out:'average_marks'}};
+Uncaught:
+SyntaxError: Missing semicolon. (1:21)
+
+> 1 | db.students.mapReduce{mapFunction,reduceFunction,{out:'average_marks'}};
+    |                      ^
+  2 |
+
+schoolDB> db.students.mapReduce(mapFunction,reduceFunction,{out:'average_marks'});
+DeprecationWarning: Collection.mapReduce() is deprecated. Use an aggregation instead.
+See https://mongodb.com/docs/manual/core/map-reduce for details.
+Uncaught:
+MongoServerError[JSInterpreterFailure]: MapReduce internal error :: caused by :: ReferenceError: values is not defined :
+@:2:18
+schoolDB> db.students.mapReduce(mapFunction,reduceFunction,{out:'average_marks'});
+Uncaught:
+MongoServerError[JSInterpreterFailure]: MapReduce internal error :: caused by :: ReferenceError: values is not defined :
+@:2:18
+schoolDB> var reduceFunction = function (key, value) { return Array.avg(values); };
+
+schoolDB> var mapFunction=function(key,value){emit(this.name,this.marks)};
+
+schoolDB> db.students.mapReduce(mapFunction,reduceFunction,{out:'average_marks'});
+Uncaught:
+MongoServerError[JSInterpreterFailure]: MapReduce internal error :: caused by :: ReferenceError: values is not defined :
+@:1:43
+schoolDB> var reduceFunction = function (key, values) { return Array.avg(values); };
+
+schoolDB> db.students.mapReduce(mapFunction,reduceFunction,{out:'average_marks'});
+{ result: 'average_marks', ok: 1 }
+schoolDB> db.average_marks.find().pretty();
+[
+  { _id: 'amit', value: 87.5 },
+  { _id: 'riya', value: 83 },
+  { _id: 'john', value: 86.5 }
+]
+schoolDB>
+
+schoolDB> db.subject.find().pretty();
+
+schoolDB> db.subject.find('science').pretty();
+MongoInvalidArgumentError: Query filter must be a plain object or ObjectId
+schoolDB> var mapFunction=function(key,value){emit(this.name,this.subject)};
+
+schoolDB> var reduceFunction = function (key, values) { return Array.avg(values); };
+
+schoolDB> db.students.mapReduce(mapFunction,reduceFunction,{out:'subs'});
+{ result: 'subs', ok: 1 }
+schoolDB> db.subs.find().pretty();
+[
+  { _id: 'amit', value: NaN },
+  { _id: 'riya', value: NaN },
+  { _id: 'john', value: NaN }
+]
+schoolDB> var mapFunction=function(key,value){emit(this.subject,this.marks)};
+
+schoolDB> db.students.mapReduce(mapFunction,reduceFunction,{out:'subs'});
+{ result: 'subs', ok: 1 }
+schoolDB> db.subs.find().pretty();
+[
+  { _id: 'math', value: 85 },
+  { _id: 'science', value: 86.33333333333333 }
+]
+schoolDB>
