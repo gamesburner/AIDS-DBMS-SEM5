@@ -1,0 +1,51 @@
+Run 'pip install mysql-connector-python' in cmd if not installed
+
+# Mysql Program:- 
+CREATE DATABASE student_db;  
+USE student_db;  
+CREATE TABLE students (id INT AUTO_INCREMENT PRIMARY KEY, name 
+VARCHAR(50), age INT, email VARCHAR(50)); 
+ 
+# Python program:- 
+import mysql.connector 
+ 
+conn = mysql.connector.connect( 
+    host="localhost", 
+    user="root", 
+    password="your_mysql_password", 
+    database="student_db" 
+) 
+ 
+c = conn.cursor() 
+ 
+while True: 
+    choice = input("1.Add 2.View 3.Update 4.Delete 5.Exit: ") 
+ 
+    if choice == '1': 
+        n = input("Name: ") 
+        a = int(input("Age: ")) 
+        e = input("Email: ") 
+        c.execute("INSERT INTO students(name,age,email) VALUES(%s,%s,%s)", (n, a, e)) 
+     
+    elif choice == '2': 
+        c.execute("SELECT * FROM students") 
+        for r in c.fetchall(): 
+            print(r) 
+     
+    elif choice == '3': 
+        i = int(input("ID: ")) 
+        n = input("Name: ") 
+        a = int(input("Age: ")) 
+        e = input("Email: ") 
+        c.execute("UPDATE students SET name=%s, age=%s, email=%s WHERE id=%s", (n, a, e, i)) 
+     
+    elif choice == '4': 
+        i = int(input("ID: ")) 
+        c.execute("DELETE FROM students WHERE id=%s", (i,)) 
+     
+    elif choice == '5': 
+        break 
+     
+    conn.commit() 
+c.close() 
+conn.close() 
